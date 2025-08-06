@@ -1,0 +1,28 @@
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #print-section, #print-section * {
+    visibility: visible;
+  }
+
+  #print-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    background-color: white;
+  }
+
+  .no-print,
+  button,
+  .mantine-Button-root {
+    display: none !important;
+  }
+
+  @page {
+    margin: 0;
+  }
+}
