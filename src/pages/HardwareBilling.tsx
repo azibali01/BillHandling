@@ -65,10 +65,9 @@ export default function HardwareBilling() {
             fontSize: "12px",
           }}
         >
-          {/* Header */}
           <Box mb="lg" style={{ borderBottom: "1px solid #ddd", paddingBottom: "1rem" }}>
-            <Group justify="space-between" align="flex-start" wrap="nowrap">
-              <Stack gap={4} align="flex-start">
+            <Group justify="space-between" align="flex-start" wrap="wrap">
+              <Stack gap={4} align="flex-start" miw={150}>
                 <img
                   src="/Logo.png"
                   alt="Company Logo"
@@ -79,7 +78,7 @@ export default function HardwareBilling() {
                 </Text>
               </Stack>
 
-              <Stack gap={2} align="center" style={{ flexGrow: 1 }}>
+              <Stack gap={2} align="center" style={{ flexGrow: 1, minWidth: 200 }}>
                 <Title order={4} style={{ marginBottom: -4 }}>Address</Title>
                 <Text size="xs" c="gray">
                   Badozai Street, Outside Bohar Gate, Multan, Pakistan
@@ -89,7 +88,7 @@ export default function HardwareBilling() {
                 </Text>
               </Stack>
 
-              <Stack gap={2} align="flex-end">
+              <Stack gap={2} align="flex-end" miw={150}>
                 <Title order={2} style={{ fontSize: "18px", margin: 0, letterSpacing: 2 }}>Wahid Sons</Title>
                 <Text size="xs" c="gray" style={{ marginTop: -6, wordSpacing: 18 }}>
                   Aluminum Hardware Store
@@ -109,124 +108,128 @@ export default function HardwareBilling() {
             </Group>
           </Box>
 
-          {/* Input Fields */}
-          <Group justify="space-between" mt={10}>
+         
+          <Group justify="space-between" wrap="wrap" gap="sm" mt={10}>
             <TextInput
               size="xs"
               label="Invoice No."
               value={invoiceNumber}
               onChange={(e) => setInvoiceNumber(e.currentTarget.value)}
-              w={250}
+              w={{ base: "100%", sm: 250 }}
             />
             <TextInput
               size="xs"
               label="Customer name"
               value={customerName}
               onChange={(e) => setCustomerName(e.currentTarget.value)}
-              w={250}
+              w={{ base: "100%", sm: 250 }}
             />
             <TextInput
               size="xs"
               label="Date"
               value={date}
               onChange={(e) => setDate(e.currentTarget.value)}
-              w={250}
+              w={{ base: "100%", sm: 250 }}
             />
-            <TextInput size="xs" label="City" value="Multan" readOnly w={250} />
+            <TextInput
+              size="xs"
+              label="City"
+              value="Multan"
+              readOnly
+              w={{ base: "100%", sm: 250 }}
+            />
           </Group>
 
-          {/* Table */}
-          <Table withTableBorder highlightOnHover mt="md" style={{ fontSize: "12px" }}>
-            <thead>
-              <tr>
-                <th style={{ textAlign: "center" }}>S/No</th>
-                <th style={{ textAlign: "start" }}>Quantity</th>
-                <th style={{ textAlign: "start" }}>Product Name</th>
-                <th style={{ textAlign: "start" }}>Rate</th>
-                <th style={{ textAlign: "center" }}>Gross Amount</th>
-                <th style={{ textAlign: "center" }}>Remove</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((row, index) => (
-                <tr key={index}>
-                  <td style={{ textAlign: "center" }}>{index + 1}</td>
-                  <td>
-                    <TextInput
-                      size="xs"
-                      type="number"
-                      w={120}
-                      value={row.qty}
-                      onChange={(e) =>
-                        handleChange(index, "qty", Number(e.currentTarget.value))
-                      }
-                    />
-                  </td>
-                  <td>
-                    <TextInput
-                      size="xs"
-                      value={row.product}
-                       w={200}
-                      onChange={(e) =>
-                        handleChange(index, "product", e.currentTarget.value)
-                      }
-                    />
-                  </td>
-                  <td>
-                    <TextInput
-                      size="xs"
-                      type="number"
-                      value={row.rate}
-                       w={120}
-                      onChange={(e) =>
-                      handleChange(index, "rate", Number(e.currentTarget.value))
-                      }
-                      
-                    />
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    {calculateGross(row).toFixed(2)}
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <Button size="xs" color="red" onClick={() => removeRow(index)}>
-                      Remove
-                    </Button>
-                  </td>
+   
+          <Box maw={900} mx="auto" mt="md">
+            <Table withTableBorder highlightOnHover style={{ fontSize: "12px" }}>
+              <thead>
+                <tr>
+                  <th style={{ textAlign: "center" }}>S/No</th>
+                  <th style={{ textAlign: "start" }}>Quantity</th>
+                  <th style={{ textAlign: "start" }}>Product Name</th>
+                  <th style={{ textAlign: "start" }}>Rate</th>
+                  <th style={{ textAlign: "center" }}>Gross Amount</th>
+                  <th style={{ textAlign: "center" }}>Remove</th>
                 </tr>
-              ))}
-            </tbody>
-          </Table>
+              </thead>
+              <tbody>
+                {rows.map((row, index) => (
+                  <tr key={index}>
+                    <td style={{ textAlign: "center" }}>{index + 1}</td>
+                    <td>
+                      <TextInput
+                        size="xs"
+                        type="number"
+                        value={row.qty}
+                        onChange={(e) =>
+                          handleChange(index, "qty", Number(e.currentTarget.value))
+                        }
+                      />
+                    </td>
+                    <td>
+                      <TextInput
+                        size="xs"
+                        value={row.product}
+                        onChange={(e) =>
+                          handleChange(index, "product", e.currentTarget.value)
+                        }
+                      />
+                    </td>
+                    <td>
+                      <TextInput
+                        size="xs"
+                        type="number"
+                        value={row.rate}
+                        onChange={(e) =>
+                          handleChange(index, "rate", Number(e.currentTarget.value))
+                        }
+                      />
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      {calculateGross(row).toFixed(2)}
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <Button size="xs" color="red" onClick={() => removeRow(index)}>
+                        Remove
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
 
-          {/* Totals */}
-          <Group justify="end" mt="md">
-            <Box
-              p="md"
-              style={{
-                fontSize: "12px",
-                backgroundColor: "#f9f9f9",
-                borderRadius: 8,
-                border: "1px solid #eee",
-                minWidth: 250,
-              }}
-            >
-              <div><strong>Total Amount:</strong> Rs. {totalAmount.toFixed(2)}</div>
-              <TextInput
-                size="xs"
-                label="Previous Amount"
-                type="number"
-                value={previousAmount}
-                onChange={(e) => setPreviousAmount(Number(e.currentTarget.value))}
-                mt="xs"
-              />
-              <div style={{ marginTop: 8 }}>
-                <strong>Grand Total:</strong> Rs. {grandTotal.toFixed(2)}
-              </div>
-            </Box>
-          </Group>
+           
+            <Group justify="end" mt="md" wrap="wrap">
+              <Box
+                p="md"
+                style={{
+                  fontSize: "12px",
+                  backgroundColor: "#f9f9f9",
+                  borderRadius: 8,
+                  border: "1px solid #eee",
+                  minWidth: 250,
+                }}
+              >
+                <div><strong>Total Amount:</strong> Rs. {totalAmount.toFixed(2)}</div>
+                <TextInput
+                  size="xs"
+                  label="Previous Amount"
+                  type="number"
+                  value={previousAmount}
+                  onChange={(e) => setPreviousAmount(Number(e.currentTarget.value))}
+                  mt="xs"
+                />
+                <div style={{ marginTop: 8 }}>
+                  <strong>Grand Total:</strong> Rs. {grandTotal.toFixed(2)}
+                </div>
+              </Box>
+            </Group>
+          </Box>
         </Box>
 
-        {/* Buttons */}
-        <Group justify="space-between" mt="xl">
+    
+        <Group justify="space-between" mt="xl" maw={900} mx="auto" wrap="wrap">
           <Button size="xs" onClick={addRow}>Add Item</Button>
           <Button size="xs">Save Bill</Button>
           <Button size="xs" onClick={() => window.print()}>Print Bill</Button>
